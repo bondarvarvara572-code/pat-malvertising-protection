@@ -1,0 +1,134 @@
+name: pat-malvertising
+
+x-service: &svc
+  image: pat-service:latest
+  build: .
+  networks: [pat-network]
+  restart: unless-stopped
+  environment: &svc-env
+    PATTERN_CONFIG: /app/config/pattern_config.json
+
+services:
+  content-collector:
+    <<: *svc
+    container_name: content-collector
+    command: ["python", "-m", "services.content_collector.app"]
+    environment:
+      <<: *svc-env
+      PORT: "8001"
+      ANALYZER_URL: http://analyzer-detector:8002/analyze
+    ports: ["8001:8001"]
+    depends_on: [analyzer-detector]
+
+  analyzer-detector:
+    <<: *svc
+    container_name: analyzer-detector
+    command: ["python", "-m", "services.analyzer_detector.app"]
+    environment:
+      <<: *svc-env
+      PORT: "8002"
+      RESPONSE_URL: http://response-block:8003/decide
+      BLOCKLIST_URL: http://response-block:8003/blocklist
+    volumes:
+      - ./config/pattern_config.json:/app/config/pattern_config.json:ro
+    ports: ["8002:8002"]
+    depends_on: [response-block]
+
+  response-block:
+    <<: *svc
+    container_name: response-block
+    command: ["python", "-m", "services.response_block.app"]
+    environment:
+      <<: *svc-env
+      PORT: "8003"
+      ALERT_URL: http://visual-alert:8004/event
+    volumes:
+      - ./config/pattern_config.json:/app/config/pattern_config.json:ro
+    ports: ["8003:8003"]
+    depends_on: [visual-alert]
+
+  visual-alert:
+    <<: *svc
+    container_name: visual-alert
+    command: ["python", "-m", "services.visual_alert.app"]
+    environment:
+      <<: *svc-env
+      PORT: "8004"
+      EVENTS_DB: /data/events.db
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+    volumes:
+      - events_data:/data
+    ports: ["8004:8004"]
+
+  # ---------- лабораторный стенд ----------
+  ad-network:
+    <<: *svc
+    container_name: ad-network
+    command: ["python", "-m", "lab.ad_network.app"]
+    environment:
+      PORT: "9000"
+      ATTACKER_URL: http://localhost:9999     # адрес атакующего с точки зрения браузера
+    ports: ["9000:9000"]
+
+  attacker-server:
+    <<: *svc
+    container_name: attacker-server
+    command: ["python", "-m", "lab.attacker_server.app"]
+    environment:
+      PORT: "9999"
+    ports: ["9999:9999"]
+
+  webapp-vulnerable:
+    <<: *svc
+    container_name: webapp-vulnerable
+    command: ["python", "-m", "lab.webapp.app"]
+    environment:
+      PORT: "8080"
+      PROTECTION: "off"
+      AD_URL: http://ad-network:9000
+      COLLECTOR_URL: http://content-collector:8001/ingest
+    ports: ["8080:8080"]
+    depends_on: [ad-network]
+
+  webapp-protected:
+    <<: *svc
+    container_name: webapp-protected
+    command: ["python", "-m", "lab.webapp.app"]
+    environment:
+      PORT: "8080"
+      PROTECTION: "on"
+      AD_URL: http://ad-network:9000
+      COLLECTOR_URL: http://content-collector:8001/ingest
+    ports: ["8081:8080"]
+    depends_on: [ad-network, content-collector]
+
+  # ---------- мониторинг ----------
+  prometheus:
+    image: prom/prometheus:v2.53.0
+    container_name: pat-prometheus
+    networks: [pat-network]
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports: ["9090:9090"]
+    depends_on: [content-collector]
+
+  grafana:
+    image: grafana/grafana:10.4.0
+    container_name: pat-grafana
+    networks: [pat-network]
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin123}
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["3000:3000"]
+    depends_on: [prometheus]
+
+volumes:
+  events_data:
+
+networks:
+  pat-network:
+    driver: bridge

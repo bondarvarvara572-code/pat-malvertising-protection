@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-protected
+  namespace: pat-ns
+  labels:
+    app: webapp-protected
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp-protected
+  template:
+    metadata:
+      labels:
+        app: webapp-protected
+        part-of: pat
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8080'
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+      - name: webapp-protected
+        image: pat-service:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - python
+        - -m
+        - lab.webapp.app
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: PORT
+          value: '8080'
+        - name: PATTERN_CONFIG
+          value: /app/config/pattern_config.json
+        - name: PROTECTION
+          value: 'on'
+        - name: AD_URL
+          value: http://ad-network:9000
+        - name: COLLECTOR_URL
+          value: http://content-collector:8001/ingest
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: 192Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+            - ALL
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-protected
+  namespace: pat-ns
+  labels:
+    app: webapp-protected
+spec:
+  type: ClusterIP
+  selector:
+    app: webapp-protected
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080

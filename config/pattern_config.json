@@ -1,0 +1,8 @@
+{
+  "trusted_domains": ["cdn.example-trusted.local", "ads.partner-trusted.local", "ad-network"],
+  "blocked_domains": [],
+  "url_shorteners": ["bit.ly", "t.co", "tinyurl.com", "goo.gl", "is.gd", "cutt.ly"],
+  "thresholds": {"suspicious": 2, "block": 5},
+  "max_upload_bytes": 262144,
+  "allowed_upload_types": ["svg", "png", "jpg", "gif", "txt"]
+}

@@ -1,0 +1,155 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: pat-ns
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-collector
+  namespace: pat-ns
+spec:
+  podSelector:
+    matchLabels:
+      app: content-collector
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: webapp-protected
+    ports:
+    - protocol: TCP
+      port: 8001
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-analyzer
+  namespace: pat-ns
+spec:
+  podSelector:
+    matchLabels:
+      app: analyzer-detector
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: content-collector
+    ports:
+    - protocol: TCP
+      port: 8002
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-response
+  namespace: pat-ns
+spec:
+  podSelector:
+    matchLabels:
+      app: response-block
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: analyzer-detector
+    ports:
+    - protocol: TCP
+      port: 8003
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-alert
+  namespace: pat-ns
+spec:
+  podSelector:
+    matchLabels:
+      app: visual-alert
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: response-block
+    ports:
+    - protocol: TCP
+      port: 8004
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ad-network
+  namespace: pat-ns
+spec:
+  podSelector:
+    matchLabels:
+      app: ad-network
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: webapp-vulnerable
+    - podSelector:
+        matchLabels:
+          app: webapp-protected
+    ports:
+    - protocol: TCP
+      port: 9000
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-metrics-scrape
+  namespace: pat-ns
+spec:
+  podSelector:
+    matchLabels:
+      part-of: pat
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-public-lab
+  namespace: pat-ns
+spec:
+  podSelector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values:
+      - webapp-vulnerable
+      - webapp-protected
+      - attacker-server
+  policyTypes:
+  - Ingress
+  ingress:
+  - {}

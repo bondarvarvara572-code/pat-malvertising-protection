@@ -1,0 +1,430 @@
+{
+  "malicious_total": 28,
+  "malicious_neutralized": 28,
+  "benign_total": 18,
+  "benign_allowed_unchanged": 18,
+  "evasion_total": 3,
+  "evasion_neutralized": 0,
+  "latency_ms_mean": 1.35,
+  "latency_ms_median": 1.24,
+  "latency_ms_p95": 1.88,
+  "latency_ms_max": 3.39,
+  "details": [
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_text_link",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_image",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_paragraph",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_list",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_table",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_heading",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_inline_style_text",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_https_link",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_long_text",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_nested",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_cyrillic",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: безопасная",
+      "name": "ad_numbers",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_script_cookie",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 15,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_script_external",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 7,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_onerror",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 15,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_onload_svg_in_html",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 10,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_js_protocol",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 10,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_js_protocol_entities",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 7,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_js_protocol_spaced",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 5,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_hidden_iframe",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 8,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_iframe_display_none",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 8,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_meta_refresh",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 5,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_location_redirect",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 10,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_data_html",
+      "decision": "SANITIZE",
+      "label": "SUSPICIOUS",
+      "score": 4,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_obfuscated_atob",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 10,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_fromcharcode",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 10,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_embed_object",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 5,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_upper_case_tags",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 7,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_ip_host_link_onclick",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 9,
+      "ok": true
+    },
+    {
+      "group": "Реклама: вредоносная",
+      "name": "mal_comment_split",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 5,
+      "ok": true
+    },
+    {
+      "group": "Реклама: обход сигнатур",
+      "name": "evade_string_concat",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": false
+    },
+    {
+      "group": "Реклама: обход сигнатур",
+      "name": "evade_css_only_click",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": false
+    },
+    {
+      "group": "Реклама: обход сигнатур",
+      "name": "evade_text_social_engineering",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": false
+    },
+    {
+      "group": "Файлы: безопасные",
+      "name": "up_svg_circle",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Файлы: безопасные",
+      "name": "up_svg_rect_text",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Файлы: безопасные",
+      "name": "up_svg_path",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Файлы: безопасные",
+      "name": "up_svg_gradient",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Файлы: безопасные",
+      "name": "up_txt",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Файлы: безопасные",
+      "name": "up_svg_xml_header",
+      "decision": "ALLOW",
+      "label": "CLEAN",
+      "score": 0,
+      "ok": true
+    },
+    {
+      "group": "Файлы: вредоносные",
+      "name": "upm_svg_script",
+      "decision": "SANITIZE",
+      "label": "MALICIOUS",
+      "score": 15,
+      "ok": true
+    },
+    {
+      "group": "Файлы: вредоносные",
+      "name": "upm_svg_onload",
+      "decision": "SANITIZE",
+      "label": "MALICIOUS",
+      "score": 15,
+      "ok": true
+    },
+    {
+      "group": "Файлы: вредоносные",
+      "name": "upm_svg_foreign",
+      "decision": "SANITIZE",
+      "label": "MALICIOUS",
+      "score": 8,
+      "ok": true
+    },
+    {
+      "group": "Файлы: вредоносные",
+      "name": "upm_svg_js_href",
+      "decision": "SANITIZE",
+      "label": "MALICIOUS",
+      "score": 10,
+      "ok": true
+    },
+    {
+      "group": "Файлы: вредоносные",
+      "name": "upm_html_as_png",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 14,
+      "ok": true
+    },
+    {
+      "group": "Файлы: вредоносные",
+      "name": "upm_svg_as_jpg",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 9,
+      "ok": true
+    },
+    {
+      "group": "Файлы: вредоносные",
+      "name": "upm_html_file",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 10,
+      "ok": true
+    },
+    {
+      "group": "Файлы: вредоносные",
+      "name": "upm_js_file",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 15,
+      "ok": true
+    },
+    {
+      "group": "Файлы: вредоносные",
+      "name": "upm_svg_xxe",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 5,
+      "ok": true
+    },
+    {
+      "group": "Файлы: вредоносные",
+      "name": "upm_svg_wrong_mime",
+      "decision": "BLOCK",
+      "label": "MALICIOUS",
+      "score": 7,
+      "ok": true
+    }
+  ],
+  "summary": {
+    "Реклама: безопасная": {
+      "total": 12,
+      "ok": 12
+    },
+    "Реклама: вредоносная": {
+      "total": 18,
+      "ok": 18
+    },
+    "Реклама: обход сигнатур": {
+      "total": 3,
+      "ok": 0
+    },
+    "Файлы: безопасные": {
+      "total": 6,
+      "ok": 6
+    },
+    "Файлы: вредоносные": {
+      "total": 10,
+      "ok": 10
+    }
+  },
+  "recall": 1.0,
+  "false_positive_rate": 0.0
+}

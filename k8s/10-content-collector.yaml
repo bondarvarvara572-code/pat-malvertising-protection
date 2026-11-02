@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-collector
+  namespace: pat-ns
+  labels:
+    app: content-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: content-collector
+  template:
+    metadata:
+      labels:
+        app: content-collector
+        part-of: pat
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8001'
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+      - name: content-collector
+        image: pat-service:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - python
+        - -m
+        - services.content_collector.app
+        ports:
+        - containerPort: 8001
+          name: http
+        env:
+        - name: PORT
+          value: '8001'
+        - name: PATTERN_CONFIG
+          value: /app/config/pattern_config.json
+        - name: ANALYZER_URL
+          value: http://analyzer-detector:8002/analyze
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8001
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: 192Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+            - ALL
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-collector
+  namespace: pat-ns
+  labels:
+    app: content-collector
+spec:
+  type: ClusterIP
+  selector:
+    app: content-collector
+  ports:
+  - name: http
+    port: 8001
+    targetPort: 8001

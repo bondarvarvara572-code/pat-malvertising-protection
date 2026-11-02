@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attacker-server
+  namespace: pat-ns
+  labels:
+    app: attacker-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: attacker-server
+  template:
+    metadata:
+      labels:
+        app: attacker-server
+        part-of: pat
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9999'
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+      - name: attacker-server
+        image: pat-service:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - python
+        - -m
+        - lab.attacker_server.app
+        ports:
+        - containerPort: 9999
+          name: http
+        env:
+        - name: PORT
+          value: '9999'
+        - name: PATTERN_CONFIG
+          value: /app/config/pattern_config.json
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 9999
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9999
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: 192Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+            - ALL
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: attacker-server
+  namespace: pat-ns
+  labels:
+    app: attacker-server
+spec:
+  type: ClusterIP
+  selector:
+    app: attacker-server
+  ports:
+  - name: http
+    port: 9999
+    targetPort: 9999

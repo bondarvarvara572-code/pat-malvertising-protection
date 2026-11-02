@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ad-network
+  namespace: pat-ns
+  labels:
+    app: ad-network
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ad-network
+  template:
+    metadata:
+      labels:
+        app: ad-network
+        part-of: pat
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9000'
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+      - name: ad-network
+        image: pat-service:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - python
+        - -m
+        - lab.ad_network.app
+        ports:
+        - containerPort: 9000
+          name: http
+        env:
+        - name: PORT
+          value: '9000'
+        - name: PATTERN_CONFIG
+          value: /app/config/pattern_config.json
+        - name: ATTACKER_URL
+          value: http://localhost:9999
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 9000
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: 192Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+            - ALL
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ad-network
+  namespace: pat-ns
+  labels:
+    app: ad-network
+spec:
+  type: ClusterIP
+  selector:
+    app: ad-network
+  ports:
+  - name: http
+    port: 9000
+    targetPort: 9000

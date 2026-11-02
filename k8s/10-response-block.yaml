@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: response-block
+  namespace: pat-ns
+  labels:
+    app: response-block
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: response-block
+  template:
+    metadata:
+      labels:
+        app: response-block
+        part-of: pat
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8003'
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+      - name: response-block
+        image: pat-service:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - python
+        - -m
+        - services.response_block.app
+        ports:
+        - containerPort: 8003
+          name: http
+        env:
+        - name: PORT
+          value: '8003'
+        - name: PATTERN_CONFIG
+          value: /app/config/pattern_config.json
+        - name: ALERT_URL
+          value: http://visual-alert:8004/event
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8003
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8003
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: 192Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: cfg
+          mountPath: /app/config
+          readOnly: true
+      volumes:
+      - name: cfg
+        configMap:
+          name: pattern-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: response-block
+  namespace: pat-ns
+  labels:
+    app: response-block
+spec:
+  type: ClusterIP
+  selector:
+    app: response-block
+  ports:
+  - name: http
+    port: 8003
+    targetPort: 8003

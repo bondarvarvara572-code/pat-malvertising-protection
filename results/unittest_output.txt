@@ -1,0 +1,57 @@
+test_detect_type (tests.test_detector.TestHelpers.test_detect_type) ... ok
+test_entropy_range (tests.test_detector.TestHelpers.test_entropy_range) ... ok
+test_verdict_thresholds (tests.test_detector.TestHelpers.test_verdict_thresholds) ... ok
+test_benign_ad_clean (tests.test_detector.TestSignatures.test_benign_ad_clean) ... ok
+test_cookie_access_alone_is_malicious (tests.test_detector.TestSignatures.test_cookie_access_alone_is_malicious) ... ok
+test_entity_encoded_javascript_detected (tests.test_detector.TestSignatures.test_entity_encoded_javascript_detected) ... ok
+test_event_handler_malicious (tests.test_detector.TestSignatures.test_event_handler_malicious) ... ok
+test_hidden_iframe_malicious (tests.test_detector.TestSignatures.test_hidden_iframe_malicious) ... ok
+test_javascript_protocol_malicious (tests.test_detector.TestSignatures.test_javascript_protocol_malicious) ... ok
+test_plain_text_clean (tests.test_detector.TestSignatures.test_plain_text_clean) ... ok
+test_script_tag_malicious (tests.test_detector.TestSignatures.test_script_tag_malicious) ... ok
+test_tab_split_javascript_detected (tests.test_detector.TestSignatures.test_tab_split_javascript_detected) ... ok
+test_disallowed_extension (tests.test_detector.TestUpload.test_disallowed_extension) ... ok
+test_html_as_png (tests.test_detector.TestUpload.test_html_as_png) ... ok
+test_size_limit (tests.test_detector.TestUpload.test_size_limit) ... ok
+test_svg_ok (tests.test_detector.TestUpload.test_svg_ok) ... ok
+test_xml_entity (tests.test_detector.TestUpload.test_xml_entity) ... ok
+test_at_symbol (tests.test_detector.TestUrl.test_at_symbol) ... ok
+test_blocked_domain (tests.test_detector.TestUrl.test_blocked_domain) ... ok
+test_ip_host (tests.test_detector.TestUrl.test_ip_host) ... ok
+test_long_url (tests.test_detector.TestUrl.test_long_url) ... ok
+test_shortener (tests.test_detector.TestUrl.test_shortener) ... ok
+test_trusted_host_no_untrusted_flag (tests.test_detector.TestUrl.test_trusted_host_no_untrusted_flag) ... ok
+test_bad_request_400 (tests.test_pipeline.Pipeline.test_bad_request_400) ... ok
+test_blocklist_grows (tests.test_pipeline.Pipeline.test_blocklist_grows) ... ok
+test_clean_ad_allowed_no_notification (tests.test_pipeline.Pipeline.test_clean_ad_allowed_no_notification) ... ok
+test_dashboard_escapes_html (tests.test_pipeline.Pipeline.test_dashboard_escapes_html) ... ok
+test_fail_closed_when_analyzer_down (tests.test_pipeline.Pipeline.test_fail_closed_when_analyzer_down) ... ok
+test_malicious_ad_blocked_end_to_end (tests.test_pipeline.Pipeline.test_malicious_ad_blocked_end_to_end) ... ok
+test_metrics_exposed (tests.test_pipeline.Pipeline.test_metrics_exposed) ... ok
+test_blocklist_case_insensitive (tests.test_policy.TestPolicy.test_blocklist_case_insensitive) ... ok
+test_clean_allowed_unchanged (tests.test_policy.TestPolicy.test_clean_allowed_unchanged) ... ok
+test_malicious_ad_blocked_and_domain_listed (tests.test_policy.TestPolicy.test_malicious_ad_blocked_and_domain_listed) ... ok
+test_structural_violation_blocked (tests.test_policy.TestPolicy.test_structural_violation_blocked) ... ok
+test_suspicious_html_sanitized (tests.test_policy.TestPolicy.test_suspicious_html_sanitized) ... ok
+test_svg_upload_with_script_sanitized (tests.test_policy.TestPolicy.test_svg_upload_with_script_sanitized) ... ok
+test_xxe_svg_blocked (tests.test_policy.TestPolicy.test_xxe_svg_blocked) ... ok
+test_allowed_markup_kept (tests.test_sanitizer.TestHtml.test_allowed_markup_kept) ... ok
+test_event_attr_dropped (tests.test_sanitizer.TestHtml.test_event_attr_dropped) ... ok
+test_https_link_kept_with_rel (tests.test_sanitizer.TestHtml.test_https_link_kept_with_rel) ... ok
+test_iframe_dropped (tests.test_sanitizer.TestHtml.test_iframe_dropped) ... ok
+test_js_url_dropped (tests.test_sanitizer.TestHtml.test_js_url_dropped) ... ok
+test_script_content_dropped (tests.test_sanitizer.TestHtml.test_script_content_dropped) ... ok
+test_text_escaped (tests.test_sanitizer.TestHtml.test_text_escaped) ... ok
+test_broken_xml_rejected (tests.test_sanitizer.TestSvg.test_broken_xml_rejected) ... ok
+test_doctype_rejected (tests.test_sanitizer.TestSvg.test_doctype_rejected) ... ok
+test_event_attr_removed (tests.test_sanitizer.TestSvg.test_event_attr_removed) ... ok
+test_foreign_object_removed (tests.test_sanitizer.TestSvg.test_foreign_object_removed) ... ok
+test_graphics_preserved (tests.test_sanitizer.TestSvg.test_graphics_preserved) ... ok
+test_javascript_href_removed (tests.test_sanitizer.TestSvg.test_javascript_href_removed) ... ok
+test_not_svg_rejected (tests.test_sanitizer.TestSvg.test_not_svg_rejected) ... ok
+test_script_removed (tests.test_sanitizer.TestSvg.test_script_removed) ... ok
+
+----------------------------------------------------------------------
+Ran 52 tests in 0.071s
+
+OK

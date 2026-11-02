@@ -1,0 +1,58 @@
+Группа                      Образец                         Решение   Вердикт     Балл   OK
+Реклама: безопасная         ad_text_link                    ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_image                        ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_paragraph                    ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_list                         ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_table                        ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_heading                      ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_inline_style_text            ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_https_link                   ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_long_text                    ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_nested                       ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_cyrillic                     ALLOW     CLEAN       0      да
+Реклама: безопасная         ad_numbers                      ALLOW     CLEAN       0      да
+Реклама: вредоносная        mal_script_cookie               BLOCK     MALICIOUS   15     да
+Реклама: вредоносная        mal_script_external             BLOCK     MALICIOUS   7      да
+Реклама: вредоносная        mal_onerror                     BLOCK     MALICIOUS   15     да
+Реклама: вредоносная        mal_onload_svg_in_html          BLOCK     MALICIOUS   10     да
+Реклама: вредоносная        mal_js_protocol                 BLOCK     MALICIOUS   10     да
+Реклама: вредоносная        mal_js_protocol_entities        BLOCK     MALICIOUS   7      да
+Реклама: вредоносная        mal_js_protocol_spaced          BLOCK     MALICIOUS   5      да
+Реклама: вредоносная        mal_hidden_iframe               BLOCK     MALICIOUS   8      да
+Реклама: вредоносная        mal_iframe_display_none         BLOCK     MALICIOUS   8      да
+Реклама: вредоносная        mal_meta_refresh                BLOCK     MALICIOUS   5      да
+Реклама: вредоносная        mal_location_redirect           BLOCK     MALICIOUS   10     да
+Реклама: вредоносная        mal_data_html                   SANITIZE  SUSPICIOUS  4      да
+Реклама: вредоносная        mal_obfuscated_atob             BLOCK     MALICIOUS   10     да
+Реклама: вредоносная        mal_fromcharcode                BLOCK     MALICIOUS   10     да
+Реклама: вредоносная        mal_embed_object                BLOCK     MALICIOUS   5      да
+Реклама: вредоносная        mal_upper_case_tags             BLOCK     MALICIOUS   7      да
+Реклама: вредоносная        mal_ip_host_link_onclick        BLOCK     MALICIOUS   9      да
+Реклама: вредоносная        mal_comment_split               BLOCK     MALICIOUS   5      да
+Реклама: обход сигнатур     evade_string_concat             ALLOW     CLEAN       0      НЕТ
+Реклама: обход сигнатур     evade_css_only_click            ALLOW     CLEAN       0      НЕТ
+Реклама: обход сигнатур     evade_text_social_engineering   ALLOW     CLEAN       0      НЕТ
+Файлы: безопасные           up_svg_circle                   ALLOW     CLEAN       0      да
+Файлы: безопасные           up_svg_rect_text                ALLOW     CLEAN       0      да
+Файлы: безопасные           up_svg_path                     ALLOW     CLEAN       0      да
+Файлы: безопасные           up_svg_gradient                 ALLOW     CLEAN       0      да
+Файлы: безопасные           up_txt                          ALLOW     CLEAN       0      да
+Файлы: безопасные           up_svg_xml_header               ALLOW     CLEAN       0      да
+Файлы: вредоносные          upm_svg_script                  SANITIZE  MALICIOUS   15     да
+Файлы: вредоносные          upm_svg_onload                  SANITIZE  MALICIOUS   15     да
+Файлы: вредоносные          upm_svg_foreign                 SANITIZE  MALICIOUS   8      да
+Файлы: вредоносные          upm_svg_js_href                 SANITIZE  MALICIOUS   10     да
+Файлы: вредоносные          upm_html_as_png                 BLOCK     MALICIOUS   14     да
+Файлы: вредоносные          upm_svg_as_jpg                  BLOCK     MALICIOUS   9      да
+Файлы: вредоносные          upm_html_file                   BLOCK     MALICIOUS   10     да
+Файлы: вредоносные          upm_js_file                     BLOCK     MALICIOUS   15     да
+Файлы: вредоносные          upm_svg_xxe                     BLOCK     MALICIOUS   5      да
+Файлы: вредоносные          upm_svg_wrong_mime              BLOCK     MALICIOUS   7      да
+
+Реклама: безопасная: 12/12
+Реклама: вредоносная: 18/18
+Реклама: обход сигнатур: 0/3
+Файлы: безопасные: 6/6
+Файлы: вредоносные: 10/10
+Полнота (recall) на вредоносных: 1.0  ·  Доля ложных срабатываний: 0.0
+Задержка конвейера, мс: среднее 2.38, медиана 2.23, p95 3.37

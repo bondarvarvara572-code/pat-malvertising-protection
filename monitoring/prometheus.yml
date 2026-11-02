@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: content-collector
+    static_configs: [{targets: ['content-collector:8001']}]
+  - job_name: analyzer-detector
+    static_configs: [{targets: ['analyzer-detector:8002']}]
+  - job_name: response-block
+    static_configs: [{targets: ['response-block:8003']}]
+  - job_name: visual-alert
+    static_configs: [{targets: ['visual-alert:8004']}]

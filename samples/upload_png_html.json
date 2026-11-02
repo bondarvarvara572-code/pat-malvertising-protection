@@ -1,0 +1,7 @@
+{
+  "kind": "upload",
+  "source": "user-upload",
+  "filename": "fake.png",
+  "mime": "image/png",
+  "content": "<html><script>alert(document.cookie)</script></html>"
+}

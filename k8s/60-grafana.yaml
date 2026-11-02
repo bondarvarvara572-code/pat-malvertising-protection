@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-provisioning
+  namespace: pat-ns
+data:
+  datasource.yml: "apiVersion: 1\ndatasources:\n- name: Prometheus\n  uid: prometheus\n\
+    \  type: prometheus\n  access: proxy\n  url: http://prometheus:9090\n  isDefault:\
+    \ true\n"
+  dashboards.yml: "apiVersion: 1\nproviders:\n- name: pat\n  folder: PAT\n  type:\
+    \ file\n  options:\n    path: /var/lib/grafana/dashboards\n"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: pat-ns
+  labels:
+    app: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:10.4.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GF_SECURITY_ADMIN_USER
+          value: admin
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: admin123
+        volumeMounts:
+        - name: prov-ds
+          mountPath: /etc/grafana/provisioning/datasources/datasource.yml
+          subPath: datasource.yml
+        - name: prov-db
+          mountPath: /etc/grafana/provisioning/dashboards/dashboards.yml
+          subPath: dashboards.yml
+        - name: dash
+          mountPath: /var/lib/grafana/dashboards
+      volumes:
+      - name: prov-ds
+        configMap:
+          name: grafana-provisioning
+      - name: prov-db
+        configMap:
+          name: grafana-provisioning
+      - name: dash
+        configMap:
+          name: grafana-dashboards
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: pat-ns
+spec:
+  selector:
+    app: grafana
+  ports:
+  - port: 3000
+    targetPort: 3000

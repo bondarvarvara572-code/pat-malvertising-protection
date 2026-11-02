@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visual-alert
+  namespace: pat-ns
+  labels:
+    app: visual-alert
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: visual-alert
+  template:
+    metadata:
+      labels:
+        app: visual-alert
+        part-of: pat
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8004'
+        prometheus.io/path: /metrics
+    spec:
+      containers:
+      - name: visual-alert
+        image: pat-service:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - python
+        - -m
+        - services.visual_alert.app
+        ports:
+        - containerPort: 8004
+          name: http
+        env:
+        - name: PORT
+          value: '8004'
+        - name: PATTERN_CONFIG
+          value: /app/config/pattern_config.json
+        - name: EVENTS_DB
+          value: ':memory:'
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8004
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8004
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: 192Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+            - ALL
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: visual-alert
+  namespace: pat-ns
+  labels:
+    app: visual-alert
+spec:
+  type: ClusterIP
+  selector:
+    app: visual-alert
+  ports:
+  - name: http
+    port: 8004
+    targetPort: 8004

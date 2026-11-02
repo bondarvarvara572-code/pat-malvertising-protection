@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pattern-config
+  namespace: pat-ns
+data:
+  pattern_config.json: "{\n  \"trusted_domains\": [\n    \"cdn.example-trusted.local\"\
+    ,\n    \"ads.partner-trusted.local\",\n    \"ad-network\"\n  ],\n  \"blocked_domains\"\
+    : [],\n  \"url_shorteners\": [\n    \"bit.ly\",\n    \"t.co\",\n    \"tinyurl.com\"\
+    ,\n    \"goo.gl\",\n    \"is.gd\",\n    \"cutt.ly\"\n  ],\n  \"thresholds\": {\n\
+    \    \"suspicious\": 2,\n    \"block\": 5\n  },\n  \"max_upload_bytes\": 262144,\n\
+    \  \"allowed_upload_types\": [\n    \"svg\",\n    \"png\",\n    \"jpg\",\n   \
+    \ \"gif\",\n    \"txt\"\n  ]\n}"
